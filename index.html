@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <title>Formulario Parcial</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+      <style>
+         h1 {
+         color: rgba(235, 30, 0, 1);
+         }
+         ::placeholder {
+         text-transform: none;
+         }
+
+      </style>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+   </head>
+   <body>
+      <div class="container">
+         <div class="row">
+            <div class="col-md-6">
+               <img src="http://www.univalle.edu.co/images/logo.jpg" style="margin-top:80px; display:block;  ">
+            </div>
+         </div>
+         <div class="row">
+            <h1 align="center" style="text-align:center;">
+               Formulario Parcial WWW
+            </h1>
+            <br>
+         </div>
+         <br>
+         <hr>
+         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+         Launch demo modal
+         </button>
+         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                  <div class="modal-body">
+                  <div class="container col-md-12">
+
+                     <form class="form" role="form" id="myForm" name="myForm">
+                        <div class="row">
+                           <br>
+                           <label class="control-label col-xs-2 " for="name">Nombres Completo*</label>
+                           <div class="col-xs-4 input-div">
+                              <input required type="text" class="form-control text-uppercase" name="name" id="name" placeholder="Su Nombre..." vallue="">
+                           </div>
+                           <div class="col-xs-4 input-div">
+                              <input required type="text" class="form-control text-uppercase" name="lastname" id="lastname" placeholder="Sus Apellidos...">
+                           </div>
+                        </div>
+                        <div class="row">
+                           <label class="control-label col-xs-2" for="tipo">Documento Identidad*</label>
+                           <div class="col-xs-2 input-div">
+                              <select required class="form-control" id="tipo" name="tipo">
+                                 <option value="Tipo">Tipo*</option>
+                                 <option value="T.I">T.I*</option>
+                                 <option value="C.C">C.C*</option>
+                              </select>
+                           </div>
+                           <div class="col-xs-4 input-div">
+                              <input required type="number" class="form-control numeric" name="numdoc" id="numdoc" placeholder="Su No. de identificación..." patern="\d+">
+                           </div>
+                        </div>
+                        <div class="row">
+                           <label class="control-label col-xs-2" for="email">Correo</label>
+                           <div class="col-xs-5 input-div">
+                              <input required type="email" class="form-control text-lowercase" id="email" name="email" placeholder="Correo..." autocomplete="off">
+                           </div>
+                        </div>
+                        <div class="row">
+                           <label class="control-label col-xs-2" for="telfijo">Celular</label>
+                           <div class="col-xs-3 input-div">
+                              <input required type="tel" class="form-control numeric" id="telcelular" name="telcelular" placeholder="Teléfono Celular...">
+                           </div>
+                        </div>
+                        <div class="row">
+                           <label class="control-label col-xs-2" for="deptres">Departamento Residencia*</label>
+                           <div class="col-xs-3 input-div">
+                              <select type="text" class="form-control" id="deptres" name="deptres" placeholder="Departamento">
+                              </select>
+                           </div>
+                           <label class="control-label col-xs-2" for="ciudadres">Ciudad Residencia*</label>
+                           <div class="col-xs-3 input-div">
+                              <select required type="text" class="form-control" id="ciudadres" name="ciudadres" placeholder="Ciudad">
+                              </select>
+                           </div>
+                        </div>
+                  </div>
+                  <hr>
+                  <div id="btn_div" align="center" class="row">
+                  <input align="center" class="btn btn-info"  type="submit" value="Inscribirme" id="save">
+                  </div>          
+                  </form>
+               </div>
+
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      </div>
+      <script>
+         $(document).ready(function () {
+             populateCountries("deptres", "ciudadres");
+             $('#myForm').on('submit', function (e) {     
+                 e.preventDefault();         
+                 saveUserData();
+             });
+
+             fetch('https://jsonplaceholder.typicode.com/posts')
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(myJson) {
+    console.log(myJson);
+  });
+             
+         })
+         
+         function saveUserData() {
+             var serialized = $('#myForm').serializeArray()
+             console.log('serialized', serialized)
+         }
+         
+         
+               var country_arr = new Array("CAUCA", "VALLE DEL CAUCA");
+           var s_a = new Array();
+               s_a[0] = "";
+               s_a[1] =
+                 "Popayán|Cajibío|El tambo|La Sierra|Morales|Piendamó|Rosas|Soatá|Timbío|Buenos aires|Caloto|Corintio|Guachené|Miranda|Padilla|Puerto Tejada|Santander de Quilichao|Suárez|Villa rica|Almaguer|Argelia|Balboa|Bolívar|Florencia|La vega|Mercaderes|Patía|Piamonte|San Sebastián|Santa Rosa|Sucre|Guapí|López de micay|Timbiquí|Caldono|Inzá|Jambaló|Páez|Puracé|Silvia|Toribío|Torotó";
+               s_a[2] =
+                 "|Cali|Candelaria|Dagua|Florida|Jamundí|La Cumbre|Palmira|Pradera|Vijes|Yumbo|Andalucía|Buga|Bugalagrande|Calima-El Darién|El Cerrito|Ginebra|Guacarí|Restrepo|Riofrío|San Pedro|Trujillo|Tuluá|Yotoco|Buenaventura|Caicedonia|Sevilla|Cartago|El águila|El Cairo|El Dovio|La Unión|La Victoria|Obando|Restrepo|Rodalnillo|Toro|Ulloa|Versalles|Zarzal|Alcalá";
+               function populateCountries(countryElementId, stateElementId) {
+                 var countryElement = document.getElementById(countryElementId);
+                 countryElement.length = 0;
+                 countryElement.options[0] = new Option("Seleccione Departamento", "-1");
+                 countryElement.selectedIndex = 0;
+                 for (var i = 0; i < country_arr.length; i++) {
+                   countryElement.options[countryElement.length] = new Option(
+                     country_arr[i],
+                     country_arr[i]
+                   );
+                 }
+                 if (stateElementId) {
+                   countryElement.onchange = function() {
+                     populateStates(countryElementId, stateElementId);
+                   };
+                 }
+               }
+               function populateStates(countryElementId, stateElementId) {
+                 var selectedCountryIndex = document.getElementById(countryElementId)
+                   .selectedIndex;
+                 var stateElement = document.getElementById(stateElementId);
+                 stateElement.length = 0;
+                 stateElement.options[0] = new Option("Seleccione Ciudad", "");
+                 stateElement.selectedIndex = 0;
+                 var state_arr = s_a[selectedCountryIndex].split("|");
+                 for (var i = 0; i < state_arr.length; i++) {
+                   stateElement.options[stateElement.length] = new Option(
+                     state_arr[i],
+                     state_arr[i].toUpperCase()
+                   );
+                 }
+               }
+             
+      </script>
+   </body>
+</html>
